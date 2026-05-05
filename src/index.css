@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme {
+  --primary: #cc9188;
+  --secondary: #839958;
+  --background: #f7f4d5;
+  --font: #3e2c29;
+  --special: #105666;
+  --shadow: #0a3323;
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--font);
+  }
+}
