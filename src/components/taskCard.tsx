@@ -19,10 +19,10 @@ export function TaskCard({title, dificulty, category, isDone, onToggle, onDelete
       ${isDone ? 'bg-gray-100 border-gray-300' : 'bg-white border-primary'}
     `}>
       <div className="flex items-center gap-4">
-        {/* Checkbox - Usei 'bg-green-600' para testar se a cor aparece */}
+       
         <div 
           onClick={(e) => {
-            e.stopPropagation(); // Evita que o clique "vaze" para outros elementos
+            e.stopPropagation(); 
             onToggle();
           }} 
           className={`w-6 h-6 rounded-full border-2 cursor-pointer transition-all
