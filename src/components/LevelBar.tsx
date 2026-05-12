@@ -24,7 +24,7 @@ export function LevelBar({ tasks }: LevelBarProps){
        
         <div className="flex items-baseline gap-2">
            <span className="text-4x font-bold text-primary uppercase tracking-widest">
-             Fazendeiro Nível:
+             Fazendeiro(a) Nível:
            </span>
            <span className="font-bold text-font text-4x leading-none">
              {level}

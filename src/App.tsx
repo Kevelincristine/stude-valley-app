@@ -1,44 +1,58 @@
-import { useState } from 'react' 
+import { useState, useEffect } from 'react' 
 import './index.css'
 import { TaskCard } from './components/taskCard'
 import { AddTaskForm } from './components/addTaskForm'
 import { LevelBar } from './components/LevelBar'
 
-const INITIAL_TASKS = [
+// 1. A INTERFACE FICA AQUI FORA
+interface Task {
+  id: number;
+  title: string;
+  category: string;
+  difficulty: "cobre" | "prata" | "ouro";
+  isDone: boolean;
+}
+
+const INITIAL_TASKS: Task[] = [
   { id: 1, title: "Usar o StudeValley!", category: "Usuário", difficulty: "cobre", isDone: false },
 ];
 
 function App() {
-  
-const [tasks, setTasks] = useState(INITIAL_TASKS);
-  
+  // 2. AVISAMOS O USESTATE QUE ELE É UMA LISTA DE TASKS: <Task[]>
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const savedTasks = localStorage.getItem('@StudeValley:tasks');
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+    return INITIAL_TASKS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('@StudeValley:tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
   function addTask(title: string, category: string, difficulty: "cobre" | "prata" | "ouro") {
-    const newTask = {
+    const newTask: Task = { // Tipamos a nova task também
       id: Math.random(), 
-      title: title,
-      category: category,
-      difficulty: difficulty,
+      title,
+      category,
+      difficulty,
       isDone: false
     };
-
     setTasks([newTask, ...tasks]); 
   }
 
   function toggleTask(id: number) {
-    setTasks(tasks.map(task => 
+    setTasks(tasks.map((task: Task) => 
       task.id === id ? { ...task, isDone: !task.isDone } : task
     ));
   }
 
- 
   function deleteTask(id: number) {
-    setTasks(tasks.filter(task => task.id !== id));
+    setTasks(tasks.filter((task: Task) => task.id !== id));
   }
 
   return (
-      
-
-
     <div className="min-h-screen p-8 bg-background">
       <header className="flex justify-between items-center border-b border-primary pb-4 mb-8">
         <div>
@@ -46,14 +60,14 @@ const [tasks, setTasks] = useState(INITIAL_TASKS);
           <p className="text-segund font-medium">Suas plantações de conhecimento</p>
         </div>
       </header>
+      
       <LevelBar tasks={tasks} />
        
       <main className="max-w-2xl mx-auto">
-      
         <AddTaskForm onAddTask={addTask} />
 
         <div className="flex flex-col gap-4">
-          {tasks.map(task => (
+          {tasks.map((task: Task) => ( // Tipamos o parâmetro do map
             <TaskCard 
               key={task.id}
               title={task.title}
@@ -67,7 +81,9 @@ const [tasks, setTasks] = useState(INITIAL_TASKS);
         </div>
 
         {tasks.length === 0 && (
-          <p className="text-center text-font opacity-50 mt-10">Sua fazenda está vazia... Comece a plantar! ✨</p>
+          <p className="text-center text-font opacity-50 mt-10 italic">
+            Sua fazenda está vazia... Comece a plantar! ✨
+          </p>
         )}
       </main>
     </div>
