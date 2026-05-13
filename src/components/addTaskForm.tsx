@@ -19,8 +19,8 @@ export function AddTaskForm({onAddTask}: AddTaskFormProps) {
     setCategory('');
   }
    return (
-    <form onSubmit={handleSubmit} className="bg-background border-2 border-primary p-6 rounded-2xl shadow-sm mb-8 flex flex-col gap-4">
-      <h2 className="text-xl font-bold text-font">Nova Plantação</h2>
+    <form onSubmit={handleSubmit} className="bg-white border-2 border-primary p-6 rounded-2xl shadow-sm mb-8 flex flex-col gap-4">
+      <h2 className="text-xl font-bold text-font">Nova Plantação!!</h2>
       
       <div className="flex flex-col gap-2">
         <input 

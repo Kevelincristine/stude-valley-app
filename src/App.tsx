@@ -3,6 +3,7 @@ import './index.css'
 import { TaskCard } from './components/taskCard'
 import { AddTaskForm } from './components/addTaskForm'
 import { LevelBar } from './components/LevelBar'
+import { AnimatePresence } from 'framer-motion'
 
 // 1. A INTERFACE FICA AQUI FORA
 interface Task {
@@ -53,6 +54,7 @@ function App() {
   }
 
   return (
+    
     <div className="min-h-screen p-8 bg-background">
       <header className="flex justify-between items-center border-b border-primary pb-4 mb-8">
         <div>
@@ -66,18 +68,21 @@ function App() {
       <main className="max-w-2xl mx-auto">
         <AddTaskForm onAddTask={addTask} />
 
-        <div className="flex flex-col gap-4">
-          {tasks.map((task: Task) => ( // Tipamos o parâmetro do map
-            <TaskCard 
-              key={task.id}
-              title={task.title}
-              isDone={task.isDone}
-              category={task.category}
-              onToggle={() => toggleTask(task.id)}
-              onDelete={() => deleteTask(task.id)}
-              dificulty={task.difficulty as any} 
-            />
-          ))}
+       <div className="flex flex-col gap-4">
+    
+          <AnimatePresence mode="popLayout"> 
+            {tasks.map((task: Task) => (
+              <TaskCard 
+                key={task.id}
+                title={task.title}
+                isDone={task.isDone}
+                category={task.category}
+                onToggle={() => toggleTask(task.id)}
+                onDelete={() => deleteTask(task.id)}
+                dificulty={task.difficulty as any} 
+              />
+            ))}
+          </AnimatePresence>
         </div>
 
         {tasks.length === 0 && (
