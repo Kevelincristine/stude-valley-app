@@ -16,16 +16,13 @@ export function TaskCard({title, category, isDone, onToggle, onDelete}: TaskCard
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
-  
-
       transition={{ 
-        duration: 0.1, 
-        ease: "easeOut" 
-      }}
+               duration: 0.1, 
+               ease: "easeOut"   }}
   
       
       whileHover={{ y: -2 }} 
-      whileTap={{ scale: 0.99 }} // Feedback de clique sem travar
+      whileTap={{ scale: 0.99 }} 
 
       className="flex items-center justify-between p-4 bg-white rounded-xl border-2 border-primary shadow-sm"
     >
@@ -56,8 +53,7 @@ export function TaskCard({title, category, isDone, onToggle, onDelete}: TaskCard
     after:-translate-x-1/2 
     after:-translate-y-1/2
     after:text-xs"
-          
-        />
+     />
         <span className={isDone ? "line-through opacity-50" : ""}>
           {title}
         </span>
@@ -68,12 +64,11 @@ export function TaskCard({title, category, isDone, onToggle, onDelete}: TaskCard
           {category}
         </span>
         <button 
-          onClick={onDelete}
-          className="text-red-400 hover:text-red-600 transition-colors"
-        >
+          onClick={onDelete}>
           ❌
         </button>
       </div>
     </motion.div>
   );
 }
+ // Melhorias: Não, porém o texto pode ser mais estilizado 

@@ -35,8 +35,6 @@ export function LevelBar({ tasks }: LevelBarProps){
             {tempXP} / {xpNecessarioParaProximo} XP
         </span>
       </div>
-      
-      {/* Barra de Progresso */}
       <div className="w-full h-5 bg-background rounded-full overflow-hidden border-2 border-primary/10 p-0.5">
         <div 
           className="h-full  bg-secondary rounded-full transition-all duration-700 ease-out"
@@ -50,4 +48,5 @@ export function LevelBar({ tasks }: LevelBarProps){
     </section>
   );
 }
+// Melhorias: Nenhuma
 

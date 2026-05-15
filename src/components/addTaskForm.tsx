@@ -9,10 +9,10 @@ export function AddTaskForm({onAddTask}: AddTaskFormProps) {
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState<"cobre" | "prata" | "ouro">('cobre');
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!title.trim()) return;
-
+    
     onAddTask(title, category || 'Geral', difficulty);
     
     setTitle('');
@@ -43,7 +43,7 @@ export function AddTaskForm({onAddTask}: AddTaskFormProps) {
 
         <select 
           value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value as any)}
+          onChange={(e) => setDifficulty(e.target.value as  "cobre" | "prata" | "ouro")}
           className="p-3 border-2 border-background rounded-xl focus:border-primary outline-none text-font bg-white"
         >
           <option value="cobre">🥉 Cobre (Fácil)</option>
@@ -61,3 +61,4 @@ export function AddTaskForm({onAddTask}: AddTaskFormProps) {
     </form>
   );
 }
+// Melhorias: No futuro mudar a fonte
