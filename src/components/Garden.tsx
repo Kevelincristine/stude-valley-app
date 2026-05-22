@@ -11,7 +11,7 @@ export function Garden({ level }: GardenProps) {
     if (level === 1) return { 
       img: "/Vaso_Acabado.gif", 
       label: "Apenas um vaso triste",
-      desc: "Complete tarefas para conseguir uma flor..."
+      desc: "Complete  algumas tarefas para animar o vaso"
     };
     if (level < 5) return { 
       img: "/Planta_crescendo.gif", 
@@ -24,8 +24,8 @@ export function Garden({ level }: GardenProps) {
       desc: "Já pode se chamar de agricultor!."
     };
     return { 
-      img: "/URL_DA_ESTUFA_LINDA.gif", // Não esqueça de colocar a barra '/' quando tiver esse GIF
-      label: "Mestre da Estufa",
+      img: "/Flor_pronta.gif", // Não esqueça de colocar a barra '/' quando tiver esse GIF
+      label: "Parabéns!",
       desc: "O ápice da sua dedicação! ✨"
     };
   };
