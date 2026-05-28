@@ -9,7 +9,7 @@ export function NavBar({currentView,setCurrentView}: NavbarProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const menuItems= [
-       { id: 'plantar', label: '🌱 Plantar Tarefa' },
+       { id: 'plantar', label: '🌱 Nova Tarefa' },
         { id: 'estatisticas', label: '📊 Estatísticas' },
         { id: 'configuracoes', label: '⚙️ Configurações' },
     ]
@@ -37,7 +37,7 @@ return (
                 onClick={() => handleNavigation(item.id)}
                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                   currentView === item.id
-                    ? 'bg-primary text-white shadow-sm'
+                    ? 'bg-secondary text-white shadow-sm'
                     : 'text-font hover:bg-background'
                 }`}
               >
@@ -77,7 +77,7 @@ return (
               onClick={() => handleNavigation(item.id)}
               className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 currentView === item.id
-                  ? 'bg-primary text-white'
+                  ? 'bg-secondary text-white'
                   : 'text-font hover:bg-background'
               }`}
             >
