@@ -1,24 +1,27 @@
+// Level de XP
 interface LevelBarProps{
-    tasks: Array<{difficulty: string; isDone: boolean }>};
+    tasks: Array<{difficulty: string; isDone: boolean }>}; //interface aceita pela level de XP
 export function LevelBar({ tasks }: LevelBarProps){
-    const TotalXP = tasks.reduce((acc,task) => {
+    const totalXP = tasks.reduce((acc,task) => {
         if(!task.isDone) return acc;
     const points ={ cobre:10,prata:50, ouro: 100};
     return acc +(points[task.difficulty as keyof typeof points] || 0);
-},0);
+},0);//  função que percorre as tarefas concluídas e acumula o XP conforme a dificuldade.
+// Caso a dificuldade não exista, adiciona 0.
 
-    let level = 1;
-    let xpNecessarioParaProximo = 100
-    let tempXP = TotalXP;
+    let level = 1; // inicio do level
+    let xpNecessarioParaProximo = 100 // começa com 100 de dificuldade
+    let tempXP = totalXP; // xp maximo
 
   while (tempXP >= xpNecessarioParaProximo) {
     tempXP -= xpNecessarioParaProximo;
     level++;
     xpNecessarioParaProximo += 100;
-  }
-  const progressoPercentual = (tempXP / xpNecessarioParaProximo) * 100;
+  } // sobe o level e aumenta a dificuldade 
+  const progressoPercentual = (tempXP / xpNecessarioParaProximo) * 100; // barrinha de xp
 
   return (
+    // Barra de XP
     <section className="max-w-2xl mx-auto mb-8 bg-white p-6 rounded-2xl border-2 border-primary shadow-sm">
       <div className="flex justify-between items-end mb-3">
        
@@ -26,7 +29,7 @@ export function LevelBar({ tasks }: LevelBarProps){
            <span className="text-4x font-bold text-primary uppercase tracking-widest">
              Planta Nível:
            </span>
-           <span className="font-bold text-font text-4x leading-none">
+           <span className="font-bold text-font text-4x px-1 leading-none">
              {level}
            </span>
         </div>
@@ -43,10 +46,10 @@ export function LevelBar({ tasks }: LevelBarProps){
       </div>
 
       <p className="text-[10px] text-font/50 mt-3 uppercase font-bold text-center tracking-[0.2em]">
-        Total Colhido: {TotalXP} XP
+        Total Colhido: {totalXP} XP
       </p>
     </section>
   );
 }
-// Melhorias: Nenhuma
+// REVISADO?:SIM!
 

@@ -1,3 +1,6 @@
+// Arquivo Principal
+
+// Importa funções ao App.tsx
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import './index.css';
@@ -194,3 +197,4 @@ function App() {
 }
 
 export default App;
+// REVISADO?:SIM!

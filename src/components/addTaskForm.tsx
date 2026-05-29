@@ -1,8 +1,10 @@
-import { useState } from 'react';
+// Formulario das tarefas
+
+import { useState } from 'react'; // Importação do UseState
 
 interface AddTaskFormProps {
   onAddTask: (title: string, category: string, dificulty: "cobre" | "prata" | "ouro") => void;
-}
+} // interface aceita pelo formulario
 
 export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
   const [title, setTitle] = useState('');
@@ -17,14 +19,14 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
     
     setTitle('');
     setCategory('');
-  }
+  } // função que inpede o formulario de se atualizar caso  o site se atualize,cria regras ao ttulo (geral ou não) e limpa o formulário
 
   return (
-    // 1. LIMPEZA: Removemos a borda e o fundo redundantes, controlamos o espaçamento interno
+    //LIMPEZA: Removemos a borda e o fundo redundantes, controlamos o espaçamento interno
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
       <h2 className="text-xl font-bold text-font">Nova Plantação!!</h2>
       
-      {/* Input de Título */}
+      {/*Título */}
       <div className="flex flex-col gap-2">
         <input 
           type="text" 
@@ -43,9 +45,7 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full sm:flex-1 p-3 border-2 border-background rounded-xl focus:border-primary outline-none text-font text-sm md:text-base transition-colors"
-        />
-
-        <select 
+        /> <select 
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value as "cobre" | "prata" | "ouro")}
           
@@ -60,11 +60,10 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
       {/* Botão de Enviar */}
       <button 
         type="submit"
-        // Adicionado active:scale-95 para dar aquele feedback de clique rápido e crocante
         className="w-full bg-secondary text-white font-bold py-3 px-4 rounded-xl hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer text-sm md:text-base mt-2 shadow-sm"
-      >
-        Plantar Tarefa!
+      > Plantar Tarefa!
       </button>
     </form>
   );
 }
+// REVISADO?:SIM!

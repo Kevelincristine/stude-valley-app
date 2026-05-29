@@ -1,9 +1,10 @@
-import {useState } from 'react' 
+// Area de navegação mobile e do PC
+import {useState } from 'react' // importação do UseState
 
 interface NavbarProps{
-    currentView: string;
-    setCurrentView: (view: string) => void;
-}
+    currentView: string; // função que mostra que area está mostrando pelo id (ex:estatisticas ou plantar)
+    setCurrentView: (view: string) => void; // função que altera a memoria do currentView
+} // <-- Formato aceito para envio da tarefa
 
 export function NavBar({currentView,setCurrentView}: NavbarProps) {
     const [isOpen, setIsOpen] = useState(false)
@@ -11,21 +12,22 @@ export function NavBar({currentView,setCurrentView}: NavbarProps) {
     const menuItems= [
        { id: 'plantar', label: '🌱 Nova Tarefa' },
         { id: 'estatisticas', label: '📊 Estatísticas' },
-        { id: 'configuracoes', label: '⚙️ Configurações' },
+        { id: 'configuracoes', label: '⚙️ Configurações' }, // Informações do Nav 
     ]
     const handleNavigation = ( id:string) =>{
         setCurrentView(id)
         setIsOpen(false);
-    }
+    } // Muda a view atual e fecha o menu
 return (
+  // Menu de navegação
     <nav className="bg-white border-b border-primary/20 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           
-          {/* LOGO (Sempre visível) */}
-          <div className="cursor-default" onClick={() => handleNavigation('plantar')}>
+          {/* LOGO */}
+          <div className="cursor-default" onClick={() => handleNavigation('plantar')}> 
             <h1 className="text-2xl font-bold text-font">
-              Stude<span className="text-primary ml-0.5">Valley</span> 
+              Stude<span className="text-primary ml-0.2">Valley</span> 
             </h1>
           </div>
 
@@ -38,8 +40,7 @@ return (
                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                   currentView === item.id
                     ? 'bg-secondary text-white shadow-sm'
-                    : 'text-font hover:bg-background'
-                }`}
+                    : 'text-font hover:bg-background'}`} 
               >
                 {item.label}
               </button>
@@ -64,7 +65,6 @@ return (
               )}
             </button>
           </div>
-
         </div>
       </div>
 
@@ -83,9 +83,10 @@ return (
             >
               {item.label}
             </button>
-          ))}
+))}
         </div>
       )}
     </nav>
   );
 }
+// REVISADO?:SIM!
