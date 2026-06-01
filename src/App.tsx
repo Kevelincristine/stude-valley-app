@@ -7,6 +7,8 @@ import './index.css';
 
 // Importação dos componentes do projeto
 import { TaskCard } from './components/taskCard';
+import { StatsView } from './components/StatsView';
+import { ConfigView } from './components/ConfigView';
 import { AddTaskForm } from './components/addTaskForm';
 import { LevelBar } from './components/LevelBar';
 import { Garden } from './components/Garden';
@@ -41,6 +43,16 @@ function App() {
   
   // Estado booleano que controla a visibilidade do formulário de adicionar tarefas
   const [isFormVisible, setIsFormVisible] = useState(false);
+  // 1. Estado para armazenar o tema atual (Padrão: primavera)
+const [theme, setTheme] = useState(() => {
+  return localStorage.getItem('@StudeValley:theme') || 'primavera';
+});
+
+// 2. Efeito colateral para aplicar o tema no HTML da página sempre que ele mudar
+useEffect(() => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('@StudeValley:theme', theme);
+}, [theme]);
 
   // --- LÓGICA DE SISTEMA DE EXPERIÊNCIA (XP) E NÍVEL ---
   // Calcula o XP total somando apenas as tarefas marcadas como concluídas (isDone: true)
@@ -80,6 +92,11 @@ function App() {
     // Fecha o formulário automaticamente assim que a tarefa é plantada
     setIsFormVisible(false);
   }
+  function resetFarm() {
+  // Limpa o item específico do localStorage
+  localStorage.removeItem('@StudeValley:tasks');
+  // Recarrega a página para o estado inicial do React ser aplicado do zero
+  window.location.reload();}
 
   // Função para alternar o estado de conclusão (checked/unchecked) de uma tarefa
   function toggleTask(id: number) {
@@ -174,21 +191,14 @@ function App() {
             </>
           )}
 
-          {/* ABA: ESTATÍSTICAS */}
-          {view === 'estatisticas' && (
-            <div className="bg-white p-6 rounded-2xl border-2 border-primary/10 shadow-sm text-center animate-fadeIn">
-              <h2 className="text-xl font-bold text-font mb-2">📊 Estatísticas da Fazenda</h2>
-              <p className="text-segund text-sm">Em breve: gráficos das suas colheitas de conhecimento!</p>
-            </div>
-          )}
-
-          {/* ABA: CONFIGURAÇÕES */}
-          {view === 'configuracoes' && (
-            <div className="bg-white p-6 rounded-2xl border-2 border-primary/10 shadow-sm text-center animate-fadeIn">
-              <h2 className="text-xl font-bold text-font mb-2">⚙️ Configurações</h2>
-              <p className="text-segund text-sm">Em breve: personalização de som, modo escuro e mais!</p>
-            </div>
-          )}
+         {/* ABA: ESTATÍSTICAS */}
+{view === 'estatisticas' && (
+  <StatsView tasks={tasks} />
+)}
+{/* ABA: CONFIGURAÇÕES */}
+{view === 'configuracoes' && (
+  <ConfigView onResetFarm={resetFarm} currentTheme={theme} onChangeTheme={setTheme} />
+)}
 
         </main>
       </div>

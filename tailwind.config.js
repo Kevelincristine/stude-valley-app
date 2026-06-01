@@ -10,10 +10,14 @@ export default {
   theme: {
     extend: {
       colors: {
-         'primary': '#cc9188',
-        'secondary':  '#839958',
-        'background': '#f7f4d5',
-        'font':        '#3e2c29',
+        // Agora o Tailwind vai ler diretamente as variáveis do seu index.css!
+        'primary': 'var(--color-primary)',
+        'secondary': 'var(--color-secondary)',
+        'background': 'var(--color-background)',
+        'font': 'var(--color-font)',
+        'segund': 'var(--color-segund)', // Adicionamos esta para os textos secundários das estações
+        
+        // Mantive as suas cores especiais caso use em outro lugar
         'special': '#105666',
         'shadow': '#0a3323',
       },
