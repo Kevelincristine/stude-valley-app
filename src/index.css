@@ -30,3 +30,18 @@
 [data-theme="inverno"] {
   --color-background: #eef2f5; 
 }
+
+/* BRILHO PULSANTE DO TÍTULO (Tela de boas-vindas) */
+@keyframes sv-title-glow {
+  0%, 100% { text-shadow: 0 0 0px rgba(204, 145, 136, 0); }
+  50% { text-shadow: 0 0 18px rgba(204, 145, 136, 0.55); }
+}
+.sv-title-glow {
+  animation: sv-title-glow 3.5s ease-in-out infinite;
+}
+/* Usuários que preferem menos movimento não recebem a animação contínua */
+@media (prefers-reduced-motion: reduce) {
+  .sv-title-glow {
+    animation: none;
+  }
+}

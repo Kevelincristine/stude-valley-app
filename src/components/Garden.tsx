@@ -4,9 +4,18 @@ import { motion, AnimatePresence } from 'framer-motion'; // biblioteca da anima�
 
 interface GardenProps {
   level: number;
-} // interface aceita pelo Garden ( nivel do usúario)
+  plantName?: string; // nome dado pelo usuário na tela inicial
+  plantType?: 'girassol' | 'gerbera' | 'lavanda'; // tipo escolhido na tela inicial
+} // interface aceita pelo Garden (nível do usuário + identidade da planta)
 
-export function Garden({ level }: GardenProps) {
+// Pequeno emoji de identidade por tipo de planta, usado ao lado do nome
+const PLANT_TYPE_EMOJI: Record<string, string> = {
+  girassol: '🌻',
+  gerbera: '🌼',
+  lavanda: '💜',
+};
+
+export function Garden({ level, plantName, plantType }: GardenProps) {
 
   const getStageContent = () => {
     // nível 1 
@@ -63,8 +72,14 @@ export function Garden({ level }: GardenProps) {
           LVL {level}
         </div>
       </div>
+        {/* Nome da planta escolhida na tela inicial */}
+      {plantName && (
+        <p className="text-primary font-bold text-sm mt-3 flex items-center gap-1">
+          {plantType && PLANT_TYPE_EMOJI[plantType]} {plantName}
+        </p>
+      )}
         {/* Mostra a descrição */}
-      <div className="text-center mt-4">
+      <div className="text-center mt-1">
         <h4 className="text-font font-bold uppercase tracking-widest text-sm">{stage.label}</h4>
         <p className="text-segund text-xs italic">{stage.desc}</p>
       </div>

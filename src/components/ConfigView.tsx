@@ -1,16 +1,24 @@
 interface ConfigViewProps {
   onResetFarm: () => void;
+  onResetProfile: () => void;
   currentTheme: string;
   onChangeTheme: (theme: string) => void;
 }
 
-export function ConfigView({ onResetFarm, currentTheme, onChangeTheme }: ConfigViewProps) {
+export function ConfigView({ onResetFarm, onResetProfile, currentTheme, onChangeTheme }: ConfigViewProps) {
   
   function handleResetClick() {
     const confirmou = window.confirm(
       "⚠️ Tem certeza que quer resetar a sua fazenda? Isto vai apagar todas as suas tarefas e o teu progresso atual!"
     );
     if (confirmou) onResetFarm();
+  }
+
+  function handleResetProfileClick() {
+    const confirmou = window.confirm(
+      "Trocar de planta/perfil? Suas tarefas e XP continuam salvos, só o nome e a planta serão redefinidos."
+    );
+    if (confirmou) onResetProfile();
   }
 
   // Lista com as estações disponíveis
@@ -54,7 +62,31 @@ export function ConfigView({ onResetFarm, currentTheme, onChangeTheme }: ConfigV
         </div>
       </div>
 
-      {/* SEÇÃO 2: DADOS E SEGURANÇA */}
+      {/* SEÇÃO 2: PERFIL */}
+      <div className="bg-white p-6 rounded-2xl border-2 border-primary/10 shadow-sm">
+        <h2 className="text-xl font-bold text-font mb-2 flex items-center gap-2">
+          🌱 Perfil
+        </h2>
+        <p className="text-segund text-xs mb-4">
+          Não curtiu o nome ou o tipo de planta que escolheu? Dá pra trocar sem perder seu progresso.
+        </p>
+
+        <div className="p-4 bg-background rounded-xl border border-primary/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <p className="text-sm font-bold text-font">Trocar Planta / Perfil</p>
+            <p className="text-xs text-segund">Redefine seu nome, o nome e o tipo da planta.</p>
+          </div>
+
+          <button
+            onClick={handleResetProfileClick}
+            className="w-full sm:w-auto bg-primary text-white font-bold py-2 px-4 rounded-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer text-sm shadow-sm"
+          >
+            Trocar Planta
+          </button>
+        </div>
+      </div>
+
+      {/* SEÇÃO 3: DADOS E SEGURANÇA */}
       <div className="bg-white p-6 rounded-2xl border-2 border-red-500/10 shadow-sm">
         <h2 className="text-xl font-bold text-red-600 mb-2 flex items-center gap-2">
            Zona de Perigo

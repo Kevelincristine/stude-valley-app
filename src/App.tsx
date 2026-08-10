@@ -13,6 +13,8 @@ import { AddTaskForm } from './components/addTaskForm';
 import { LevelBar } from './components/LevelBar';
 import { Garden } from './components/Garden';
 import { NavBar } from './components/NavBar';
+import { WelcomeScreen } from './components/welcomeScreen';
+import type { PlayerProfile } from './components/welcomeScreen';
 
 // Definição da estrutura de uma Tarefa (Task)
 interface Task {
@@ -29,6 +31,19 @@ const INITIAL_TASKS: Task[] = [
 ];
 
 function App() {
+  // Estado do perfil do jogador (nome do usuário, nome e tipo da planta escolhida)
+  // Se não existir no LocalStorage, o onboarding (WelcomeScreen) é exibido antes do app
+  const [profile, setProfile] = useState<PlayerProfile | null>(() => {
+    const savedProfile = localStorage.getItem('@StudeValley:profile');
+    return savedProfile ? JSON.parse(savedProfile) : null;
+  });
+
+  // Função chamada quando o usuário termina o onboarding
+  function handleCompleteOnboarding(newProfile: PlayerProfile) {
+    localStorage.setItem('@StudeValley:profile', JSON.stringify(newProfile));
+    setProfile(newProfile);
+  }
+
   // Estado que armazena a lista de tarefas, buscando do LocalStorage se existir
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = localStorage.getItem('@StudeValley:tasks');
@@ -98,6 +113,12 @@ useEffect(() => {
   // Recarrega a página para o estado inicial do React ser aplicado do zero
   window.location.reload();}
 
+  // Função para trocar de planta/perfil (volta pro onboarding), sem apagar as tarefas
+  function resetProfile() {
+    localStorage.removeItem('@StudeValley:profile');
+    window.location.reload();
+  }
+
   // Função para alternar o estado de conclusão (checked/unchecked) de uma tarefa
   function toggleTask(id: number) {
     setTasks(tasks.map((task: Task) => 
@@ -108,6 +129,12 @@ useEffect(() => {
   // Função para remover uma tarefa da lista pelo ID
   function deleteTask(id: number) {
     setTasks(tasks.filter((task: Task) => task.id !== id));
+  }
+
+  // Enquanto não houver perfil salvo (primeira visita), mostra o onboarding
+  // no lugar do app principal
+  if (!profile) {
+    return <WelcomeScreen onComplete={handleCompleteOnboarding} />;
   }
 
   return (
@@ -133,7 +160,7 @@ useEffect(() => {
             - lg:sticky e lg:top-24 fazem o bloco fixar na tela ao rolar a página apenas no computador */}
         <aside className="flex flex-col gap-4 md:gap-6 lg:sticky lg:top-24 w-full">
           <LevelBar tasks={tasks} />
-          <Garden level={currentLevel} /> 
+          <Garden level={currentLevel} plantName={profile.plantName} plantType={profile.plantType} /> 
         </aside>
 
         {/* COLUNA DA DIREITA: Conteúdo dinâmico baseado no menu */}
@@ -197,7 +224,7 @@ useEffect(() => {
 )}
 {/* ABA: CONFIGURAÇÕES */}
 {view === 'configuracoes' && (
-  <ConfigView onResetFarm={resetFarm} currentTheme={theme} onChangeTheme={setTheme} />
+  <ConfigView onResetFarm={resetFarm} onResetProfile={resetProfile} currentTheme={theme} onChangeTheme={setTheme} />
 )}
 
         </main>
