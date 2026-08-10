@@ -145,11 +145,22 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
       >
         {/* CABEÇALHO / RESUMO DO STUDEVALLEY */}
         <div className="text-center">
-          <AnimatedTitle reduceMotion={reduceMotion} />
+          <div className="flex items-center justify-center gap-2 lg:gap-4">
+            <AnimatedTitle reduceMotion={reduceMotion} />
+            <motion.img
+              src="https://stardewvalleywiki.com/mediawiki/images/5/5b/Tea_Leaves.png"
+              alt="Ícone do StudeValley"
+              initial={reduceMotion ? undefined : { opacity: 0, scale: 0.5, rotate: -15 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 14, delay: reduceMotion ? 0 : 0.4 }}
+              className="w-8 h-8 sm:w-10 sm:h-10 lg:w-14 lg:h-14 xl:w-16 xl:h-16 object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
           <p className="text-segund text-xs sm:text-sm lg:text-lg xl:text-xl mt-3 lg:mt-5 leading-relaxed lg:leading-relaxed max-w-2xl mx-auto min-h-[3.5em] lg:min-h-[3em]">
             {typedDescription}
             {isTyping && (
-              <span className="inline-block h-[1em] bg-primary ml-0.5 align-middle animate-pulse" />
+              <span className="inline-block  h-[1em] bg-primary ml-0.5 align-middle animate-pulse" />
             )}
           </p>
         </div>
