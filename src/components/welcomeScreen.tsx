@@ -17,12 +17,12 @@ interface WelcomeScreenProps {
 const PLANT_OPTIONS: Array<{
   id: PlayerProfile['plantType'];
   label: string;
-  emoji: string;
+  seedImage: string;
   desc: string;
 }> = [
-  { id: 'girassol', label: 'Girassol', emoji: '🌻', desc: 'Alegre e cheio de energia' },
-  { id: 'gerbera', label: 'Gérbera', emoji: '🌼', desc: 'Resistente, cresce no seu ritmo' },
-  { id: 'lavanda', label: 'Lavanda', emoji: '💜', desc: 'Cresce rápido a cada tarefa' },
+  { id: 'girassol', label: 'Girassol', seedImage: '/icons/SementeG.png', desc: 'Alegre e cheio de energia' },
+  { id: 'gerbera', label: 'Gérbera', seedImage: '/icons/SementeGe.png', desc: 'Resistente, cresce no seu ritmo' },
+  { id: 'lavanda', label: 'Lavanda', seedImage: '/icons/SementeL.png', desc: 'Cresce rápido a cada tarefa' },
 ];
 
 const PROJECT_DESCRIPTION =
@@ -141,8 +141,10 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="w-full max-w-md sm:max-w-lg lg:max-w-2xl xl:max-w-3xl bg-white rounded-2xl border-2 border-primary/10 shadow-sm p-6 sm:p-8 lg:p-12 xl:p-14 flex flex-col gap-6 lg:gap-8"
+        className="w-full max-w-md sm:max-w-lg lg:max-w-4xl xl:max-w-5xl bg-white rounded-2xl border-2 border-primary/10 shadow-sm p-6 sm:p-8 lg:p-12 xl:p-14 flex flex-col lg:flex-row gap-6 lg:gap-10 lg:items-center"
       >
+        {/* COLUNA DO FORMULÁRIO: cabeçalho, indicador de passo e os passos do onboarding */}
+        <div className="flex flex-col gap-6 lg:gap-8 flex-1 min-w-0">
         {/* CABEÇALHO / RESUMO DO STUDEVALLEY */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 lg:gap-4">
@@ -242,7 +244,12 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
                         : 'border-background hover:border-primary/40'
                     }`}
                   >
-                    <span className="text-4xl lg:text-6xl xl:text-7xl">{option.emoji}</span>
+                    <img
+                      src={option.seedImage}
+                      alt={`Semente de ${option.label}`}
+                      className="w-12 h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 object-contain"
+                      style={{ imageRendering: 'pixelated' }}
+                    />
                     <span className="font-bold text-font text-sm lg:text-lg">{option.label}</span>
                     <span className="text-segund text-[11px] lg:text-sm leading-tight">{option.desc}</span>
                   </button>
@@ -269,6 +276,23 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
             </div>
           </motion.div>
         )}
+        </div>
+        {/* FIM DA COLUNA DO FORMULÁRIO */}
+
+        {/* GIF DECORATIVO: fica embaixo do formulário no celular/tablet, e ao lado em telas grandes (lg+) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="w-40 h-40 sm:w-52 sm:h-52 lg:w-56 lg:h-56 xl:w-64 xl:h-64 mx-auto lg:mx-0 self-center"
+        >
+          <img
+            src="/Flor_nascendo.gif"
+            alt="Planta crescendo"
+            className="w-full h-full object-contain"
+            style={{ imageRendering: 'pixelated' }}
+          />
+        </motion.div>
       </motion.div>
     </div>
   );

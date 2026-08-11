@@ -24,6 +24,27 @@ export function StatsView({ tasks }: StatsViewProps) {
   const silverDone = tasks.filter(t => t.isDone && t.difficulty === 'prata').length;
   const goldDone = tasks.filter(t => t.isDone && t.difficulty === 'ouro').length;
 
+  // Contagem de tarefas por categoria, do maior pro menor (top 5)
+  const categoryCounts = tasks.reduce<Record<string, number>>((acc, t) => {
+    const cat = t.category || 'Geral';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {});
+  const topCategories = Object.entries(categoryCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+  const maxCategoryCount = topCategories.length > 0 ? topCategories[0][1] : 0;
+
+  // Mensagem contextual conforme o progresso atual
+  const motivationalMessage =
+    totalCreated === 0
+      ? 'Plante sua primeira tarefa pra começar a colher resultados!'
+      : completionRate >= 80
+      ? 'Sua fazenda está florescendo! Continue assim. 🌟'
+      : completionRate >= 40
+      ? 'Bom progresso! Falta pouco pra colher tudo.'
+      : 'Hora de regar suas tarefas pendentes!';
+
   return (
     <div className="w-full flex flex-col gap-6">
       
@@ -45,6 +66,7 @@ export function StatsView({ tasks }: StatsViewProps) {
               style={{ width: `${completionRate}%` }}
             />
           </div>
+          <p className="text-xs text-segund italic mt-1">{motivationalMessage}</p>
         </div>
       </div>
 
@@ -60,7 +82,7 @@ export function StatsView({ tasks }: StatsViewProps) {
 
         {/* Total Colhido */}
         <div className="bg-white p-4 rounded-2xl border-2 border-primary/10 shadow-sm flex flex-col items-center text-center justify-center">
-          <span className="text-2xl mb-1">🥀</span>
+          <span className="text-2xl mb-1">🌾</span>
           <span className="text-2xl font-bold text-font">{totalDone}</span>
           <span className="text-[11px] font-bold text-segund uppercase tracking-wider">Total Feitas</span>
         </div>
@@ -82,6 +104,32 @@ export function StatsView({ tasks }: StatsViewProps) {
         </div>
 
       </div>
+
+      {/* SEÇÃO DE CATEGORIAS: onde o usuário mais planta esforço */}
+      {topCategories.length > 0 && (
+        <div className="bg-white p-6 rounded-2xl border-2 border-primary/10 shadow-sm">
+          <h3 className="text-md font-bold text-font mb-4 uppercase tracking-wider text-xs">
+            🌱 Onde Você Mais Planta
+          </h3>
+
+          <div className="flex flex-col gap-3">
+            {topCategories.map(([category, count]) => (
+              <div key={category} className="flex flex-col gap-1">
+                <div className="flex justify-between text-xs font-bold text-font">
+                  <span>{category}</span>
+                  <span className="text-segund">{count} {count === 1 ? 'tarefa' : 'tarefas'}</span>
+                </div>
+                <div className="w-full h-2.5 bg-background rounded-full overflow-hidden border border-primary/10">
+                  <div
+                    className="h-full bg-primary transition-all duration-500"
+                    style={{ width: `${maxCategoryCount > 0 ? (count / maxCategoryCount) * 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* SEÇÃO DE TROFÉUS POR DIFICULDADE */}
       <div className="bg-white p-6 rounded-2xl border-2 border-primary/10 shadow-sm">

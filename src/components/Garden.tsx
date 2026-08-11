@@ -1,11 +1,12 @@
 // Jardim do jogo
 
 import { motion, AnimatePresence } from 'framer-motion'; // biblioteca da animação
+import type { PlayerProfile } from './welcomeScreen';
 
 interface GardenProps {
   level: number;
   plantName?: string; // nome dado pelo usuário na tela inicial
-  plantType?: 'girassol' | 'gerbera' | 'lavanda'; // tipo escolhido na tela inicial
+  plantType?: PlayerProfile['plantType']; // tipo escolhido na tela inicial
 } // interface aceita pelo Garden (nível do usuário + identidade da planta)
 
 // Pequeno emoji de identidade por tipo de planta, usado ao lado do nome
@@ -15,30 +16,47 @@ const PLANT_TYPE_EMOJI: Record<string, string> = {
   lavanda: '💜',
 };
 
+// 4 estágios de imagem (vaso vazio -> brotando -> crescendo -> florescendo) por tipo de planta
+const PLANT_STAGE_IMAGES: Record<PlayerProfile['plantType'], [string, string, string, string]> = {
+  girassol: ['/icons/G01.png', '/icons/G02.png', '/icons/G03.png', '/icons/G04.png'],
+  gerbera: ['/icons/GE1.png', '/icons/GE2.png', '/icons/GE3.png', '/icons/GE4.png'],
+  lavanda: ['/icons/L01.png', '/icons/L02.png', '/icons/L03.png', '/icons/L04.png'],
+};
+
+// Fallback (GIFs antigos) caso, por algum motivo, plantType não esteja definido
+const FALLBACK_STAGE_IMAGES: [string, string, string, string] = [
+  '/Vaso_Acabado.gif',
+  '/Planta_crescendo.gif',
+  '/Flor_nascendo.gif',
+  '/Flor_pronta.gif',
+];
+
 export function Garden({ level, plantName, plantType }: GardenProps) {
+
+  const stageImages = plantType ? PLANT_STAGE_IMAGES[plantType] : FALLBACK_STAGE_IMAGES;
 
   const getStageContent = () => {
     // nível 1 
     if (level === 1) return { 
-      img: "/Vaso_Acabado.gif", 
+      img: stageImages[0], 
       label: "Apenas um vaso triste",
       desc: "Complete  algumas tarefas para animar o vaso"
     };
     // nível 2 à 5
     if (level < 5) return { 
-      img: "/Planta_crescendo.gif", 
+      img: stageImages[1], 
       label: "Em Restauração",
       desc: "Algo está crescendo!"
     };
     // nível 6 à 9
     if (level < 10) return { 
-      img: "/Flor_nascendo.gif", 
+      img: stageImages[2], 
       label: "Quase lá",
       desc: "Já pode se chamar de agricultor!."
     };
     // Último nível (10)
     return { 
-      img: "/Flor_pronta.gif", // Não esqueça de colocar a barra '/' quando tiver esse GIF
+      img: stageImages[3],
       label: "Parabéns!",
       desc: "O ápice da sua dedicação! ✨"
     };
