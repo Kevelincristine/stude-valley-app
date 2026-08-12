@@ -25,7 +25,13 @@ return (
         <div className="flex justify-between h-16 items-center">
           
           {/* LOGO */}
-          <div className="cursor-default" onClick={() => handleNavigation('plantar')}> 
+          <div className="cursor-default flex items-center gap-2" onClick={() => handleNavigation('plantar')}> 
+            <img
+              src="/Icon_site.png"
+              alt="Ícone do StudeValley"
+              className="w-7 h-7 object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
             <h1 className="text-2xl font-bold text-font">
               Stude<span className="text-primary ml-0.2">Valley</span> 
             </h1>

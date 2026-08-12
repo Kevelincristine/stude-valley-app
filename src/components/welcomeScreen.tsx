@@ -1,6 +1,7 @@
 // Tela inicial (Onboarding): coleta nome do usuário, escolha e nome da planta
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Footer } from './Footer';
 
 // Formato salvo no localStorage e usado pelo resto do app
 export interface PlayerProfile {
@@ -136,7 +137,8 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 sm:p-6 lg:p-10">
+    <div className="min-h-screen bg-background flex flex-col p-4 sm:p-6 lg:p-10">
+      <div className="flex-1 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -150,7 +152,7 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
           <div className="flex items-center justify-center gap-2 lg:gap-4">
             <AnimatedTitle reduceMotion={reduceMotion} />
             <motion.img
-              src="https://stardewvalleywiki.com/mediawiki/images/5/5b/Tea_Leaves.png"
+              src="/Icon_site.png"
               alt="Ícone do StudeValley"
               initial={reduceMotion ? undefined : { opacity: 0, scale: 0.5, rotate: -15 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -279,21 +281,50 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
         </div>
         {/* FIM DA COLUNA DO FORMULÁRIO */}
 
-        {/* GIF DECORATIVO: fica embaixo do formulário no celular/tablet, e ao lado em telas grandes (lg+) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="w-40 h-40 sm:w-52 sm:h-52 lg:w-56 lg:h-56 xl:w-64 xl:h-64 mx-auto lg:mx-0 self-center"
-        >
-          <img
-            src="/Flor_nascendo.gif"
-            alt="Planta crescendo"
-            className="w-full h-full object-contain"
-            style={{ imageRendering: 'pixelated' }}
-          />
-        </motion.div>
+        {/* COLUNA DECORATIVA: QR Code + título chamativo, e o GIF da plantinha embaixo.
+            No celular/tablet fica tudo empilhado abaixo do formulário; em telas grandes (lg+) fica ao lado. */}
+        <div className="flex flex-col items-center gap-4 lg:gap-6 mx-auto lg:mx-0 self-center">
+
+          {/* QR CODE + TÍTULO CHAMATIVO: escondido no celular, aparece a partir de tablets (sm+) */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="hidden sm:flex flex-col items-center gap-2"
+          >
+            <motion.p
+              animate={reduceMotion ? undefined : { scale: [1, 1.06, 1] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="text-pink-500 font-extrabold text-lg sm:text-xl lg:text-2xl xl:text-3xl uppercase tracking-wide drop-shadow-sm"
+            >
+              Teste Já
+            </motion.p>
+            <img
+              src="/QrCode.png"
+              alt="QR Code para testar o StudeValley"
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-40 lg:h-40 xl:w-48 xl:h-48 object-contain rounded-lg border-2 border-primary/10 bg-white p-1"
+            />
+          </motion.div>
+
+          {/* GIF DECORATIVO */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="w-40 h-40 sm:w-52 sm:h-52 lg:w-56 lg:h-56 xl:w-64 xl:h-64"
+          >
+            <img
+              src="/Flor_nascendo.gif"
+              alt="Planta crescendo"
+              className="w-full h-full object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </motion.div>
+        </div>
       </motion.div>
+      </div>
+
+      <Footer />
     </div>
   );
 }
